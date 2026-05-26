@@ -1,4 +1,4 @@
-name: ci-test
+name: app-ci-test
 
 on:
   push:
