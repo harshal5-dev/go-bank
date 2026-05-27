@@ -6,20 +6,20 @@ import (
 	"os"
 	"testing"
 
+	"github.com/go-bank/internal/utils"
 	"github.com/jackc/pgx/v5/pgxpool"
-)
-
-const (
-	dbDriver = "postgres"
-	dbSource = "postgres://root:12345@localhost:5432/go_bank?sslmode=disable"
 )
 
 var testQueries *Queries
 var testDB *pgxpool.Pool
 
 func TestMain(m *testing.M) {
-	var err error
-	testDB, err = pgxpool.New(context.Background(), dbSource)
+	config, err := utils.LoadConfig("../../..")
+	if err != nil {
+		log.Fatal("cannot load config:", err)
+	}
+
+	testDB, err = pgxpool.New(context.Background(), config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db", err)
 	}
