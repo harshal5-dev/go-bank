@@ -34,4 +34,7 @@ mock:
 aws-secret:
 	aws secretsmanager get-secret-value --secret-id go_bank --region ap-south-1 --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
 
+aws-login:
+	aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 590728476279.dkr.ecr.ap-south-1.amazonaws.com
+
 .PHONY: postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 sqlc test server mock
